@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
   name: boardgame-deployment
+  namespace: webapps
 spec:
   selector:
     matchLabels:
@@ -19,19 +20,19 @@ spec:
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
 
-
 ---
 
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
   name: boardgame-ssvc
+  namespace: webapps
 spec:
   selector:
     app: boardgame
   ports:
-    - protocol: "TCP"
+    - protocol: TCP
       port: 80
-      targetPort: 8080 
-      nodeport: 30080
+      targetPort: 8080
+      nodePort: 30080   # ✅ Correct case
   type: NodePort # type of the service.
